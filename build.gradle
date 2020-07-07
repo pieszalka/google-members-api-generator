@@ -1,0 +1,41 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.8.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'java'
+	id 'scala'
+}
+
+group = 'com.fourthwall'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+
+	implementation(group: "org.scala-lang", name: "scala-library", version: scalaVersion)
+	implementation(group: "org.scala-lang.modules", name: "scala-java8-compat_2.12", version: scalaJavaCompatVersion)
+
+	// Scala
+	implementation(group: "com.fasterxml.jackson.module", name: "jackson-module-scala_2.12", version: jacksonVersion)
+	implementation(group: "com.fasterxml.jackson.dataformat", name: "jackson-dataformat-csv", version: jacksonVersion)
+	implementation(group: "com.typesafe.scala-logging", name: "scala-logging_2.12", version: scalaLoggingVersion)
+
+	// Tapir
+	implementation(group: 'com.softwaremill.sttp.tapir', name: 'tapir-core_2.12', version: '0.12.24')
+	implementation(group: 'com.softwaremill.sttp.tapir', name: 'tapir-openapi-docs_2.12', version: '0.12.24')
+	implementation(group: 'com.softwaremill.sttp.tapir', name: 'tapir-openapi-circe-yaml_2.12', version: '0.12.24')
+	implementation(group: 'com.softwaremill.sttp.tapir', name: 'tapir-json-circe_2.12', version: '0.12.24')
+	implementation(group: 'io.circe', name: 'circe-generic-extras_2.12', version: '0.12.2')
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+test {
+	useJUnitPlatform()
+}
