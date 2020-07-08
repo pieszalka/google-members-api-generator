@@ -14,7 +14,8 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+	implementation(group: 'org.springframework', name: 'spring-webflux', version: '5.1.10.RELEASE')
 
 	implementation(group: "org.scala-lang", name: "scala-library", version: scalaVersion)
 	implementation(group: "org.scala-lang.modules", name: "scala-java8-compat_2.12", version: scalaJavaCompatVersion)
@@ -30,6 +31,20 @@ dependencies {
 	implementation(group: 'com.softwaremill.sttp.tapir', name: 'tapir-openapi-circe-yaml_2.12', version: '0.12.24')
 	implementation(group: 'com.softwaremill.sttp.tapir', name: 'tapir-json-circe_2.12', version: '0.12.24')
 	implementation(group: 'io.circe', name: 'circe-generic-extras_2.12', version: '0.12.2')
+
+	// Streaming
+	implementation(group: "io.monix", name: "monix_2.12", version: monixVersion)
+
+	// Cats
+	implementation(group: "org.typelevel", name: "cats-core_2.12", version: catsVersion)
+
+	// HTTP Client
+	implementation(group: "com.squareup.retrofit2", name: "retrofit", version: retrofitVersion)
+	implementation(group: "com.squareup.retrofit2", name: "converter-jackson", version: retrofitVersion)
+	implementation(group: "com.squareup.retrofit2", name: "converter-scalars", version: retrofitVersion)
+	implementation(group: "com.squareup.retrofit2", name: "adapter-scala", version: retrofitVersion)
+	implementation(group: "com.squareup.okhttp3", name: "okhttp", version: okHttpVersion)
+	implementation(group: "com.squareup.okhttp3", name: "logging-interceptor", version: okHttpVersion)
 
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

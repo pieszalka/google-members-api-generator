@@ -1,0 +1,340 @@
+openapi: 3.0.1
+info:
+  title: Google Members Api
+  version: 0.0.1
+paths:
+  /youtube/v3/members:
+    get:
+      operationId: getYoutube/v3/members
+      parameters:
+        - name: part
+          in: query
+          required: true
+          schema:
+            type: string
+          example: snippet
+        - name: maxResults
+          in: query
+          required: true
+          schema:
+            type: integer
+          example: 100
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberListDto'
+        '503':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailable'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgument'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+  /youtube/v3/membershipsLevels:
+    get:
+      operationId: getYoutube/v3/membershipslevels
+      parameters:
+        - name: part
+          in: query
+          required: true
+          schema:
+            type: string
+          example: id
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipLevelListDto'
+        '503':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailable'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgument'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+components:
+  schemas:
+    ServiceUnavailable:
+      required:
+        - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    Error:
+      required:
+        - message
+        - code
+      type: object
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetails'
+    ErrorDetails:
+      required:
+        - reason
+        - locationType
+        - message
+        - domain
+        - location
+      type: object
+      properties:
+        reason:
+          type: string
+        locationType:
+          type: string
+        message:
+          type: string
+        domain:
+          type: string
+        location:
+          type: string
+    NotFound:
+      required:
+        - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    InvalidArgument:
+      required:
+        - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    Unauthorized:
+      required:
+        - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    Forbidden:
+      required:
+        - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    MemberListDto:
+      required:
+        - kind
+        - etag
+        - nextPageToken
+        - pageInfo
+      type: object
+      properties:
+        kind:
+          type: string
+        etag:
+          type: string
+        nextPageToken:
+          type: string
+        pageInfo:
+          $ref: '#/components/schemas/PageInfoDto'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MemberDto'
+    PageInfoDto:
+      required:
+        - totalResults
+        - resultsPerPage
+      type: object
+      properties:
+        totalResults:
+          type: integer
+        resultsPerPage:
+          type: integer
+    MemberDto:
+      required:
+        - kind
+        - etag
+        - snippet
+      type: object
+      properties:
+        kind:
+          type: string
+        etag:
+          type: string
+        snippet:
+          $ref: '#/components/schemas/MemberSnippetDto'
+    MemberSnippetDto:
+      required:
+        - creatorChannelId
+        - memberDetails
+        - membershipsDetails
+      type: object
+      properties:
+        creatorChannelId:
+          type: string
+        memberDetails:
+          $ref: '#/components/schemas/MemberDetailsDto'
+        membershipsDetails:
+          $ref: '#/components/schemas/MembershipsDetailsDto'
+    MemberDetailsDto:
+      required:
+        - channelId
+        - channelUrl
+        - displayName
+        - profileImageUrl
+      type: object
+      properties:
+        channelId:
+          type: string
+        channelUrl:
+          type: string
+        displayName:
+          type: string
+        profileImageUrl:
+          type: string
+    MembershipsDetailsDto:
+      required:
+        - highestAccessibleLevel
+        - highestAccessibleLevelDisplayName
+        - membershipsDuration
+      type: object
+      properties:
+        highestAccessibleLevel:
+          type: string
+        highestAccessibleLevelDisplayName:
+          type: string
+        accessibleLevels:
+          type: array
+          items:
+            type: string
+        membershipsDuration:
+          $ref: '#/components/schemas/MembershipsDurationDto'
+        membershipsDurationAtLevel:
+          type: array
+          items:
+            $ref: '#/components/schemas/MembershipsDurationAtLevelDto'
+    MembershipsDurationDto:
+      required:
+        - memberSince
+        - memberTotalDurationMonths
+      type: object
+      properties:
+        memberSince:
+          type: string
+          format: date-time
+        memberTotalDurationMonths:
+          type: integer
+    MembershipsDurationAtLevelDto:
+      required:
+        - level
+        - memberSince
+        - memberTotalDurationMonths
+      type: object
+      properties:
+        level:
+          type: string
+        memberSince:
+          type: string
+          format: date-time
+        memberTotalDurationMonths:
+          type: integer
+    MembershipLevelListDto:
+      required:
+        - kind
+        - etag
+      type: object
+      properties:
+        kind:
+          type: string
+        etag:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MembershipLevelDto'
+    MembershipLevelDto:
+      required:
+        - kind
+        - etag
+        - id
+        - snippet
+      type: object
+      properties:
+        kind:
+          type: string
+        etag:
+          type: string
+        id:
+          type: string
+        snippet:
+          $ref: '#/components/schemas/MembershipLevelSnippetDto'
+    MembershipLevelSnippetDto:
+      required:
+        - creatorChannelId
+        - levelDetails
+      type: object
+      properties:
+        creatorChannelId:
+          type: string
+        levelDetails:
+          $ref: '#/components/schemas/MembershipLevelDetailsDto'
+    MembershipLevelDetailsDto:
+      required:
+        - displayName
+      type: object
+      properties:
+        displayName:
+          type: string
