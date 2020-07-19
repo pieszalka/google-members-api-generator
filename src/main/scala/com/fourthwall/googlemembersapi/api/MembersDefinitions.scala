@@ -65,6 +65,7 @@ trait MembersDefinitions extends StatusCodes with TapirJsonCirce {
         statusMapping(Forbidden, jsonBody[Forbidden])
       )
     )
+    .in(auth.bearer)
 
   /**
     * List all existing members page by page (all levels)
@@ -87,7 +88,7 @@ trait MembersDefinitions extends StatusCodes with TapirJsonCirce {
     baseMembersEndpoint.get
       .in(PartParam)
       .in(FilterByMemberChanelId)
-      .in("youtube/v3/members")
+      .in("youtube/v3//members")
       .out(jsonBody[MemberListDto])
 
   /**
@@ -99,7 +100,7 @@ trait MembersDefinitions extends StatusCodes with TapirJsonCirce {
     baseMembersEndpoint.get
       .in(PartParam)
       .in(ModeParam)
-      .in("youtube/v3/members")
+      .in("youtube/v3///members")
       .out(jsonBody[MemberListDto])
 
   /**
@@ -115,6 +116,6 @@ trait MembersDefinitions extends StatusCodes with TapirJsonCirce {
       .in(ModeParam)
       .in(PageToken)
       .in(HasAccessToLevel)
-      .in("youtube/v3/members")
+      .in("youtube/v3////members")
       .out(jsonBody[MemberListDto])
 }

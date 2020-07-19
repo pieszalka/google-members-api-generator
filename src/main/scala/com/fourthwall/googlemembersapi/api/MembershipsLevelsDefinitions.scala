@@ -30,6 +30,7 @@ trait MembershipsLevelsDefinitions extends StatusCodes with TapirJsonCirce {
         statusMapping(Forbidden, jsonBody[Forbidden])
       )
     )
+    .in(auth.bearer)
 
   /**
     * List all pricing levels of a creator
