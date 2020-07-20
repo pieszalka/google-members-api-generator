@@ -4,5 +4,5 @@ case class MembershipLevelDto(
   kind: String,
   etag: String,
   id: String,
-  snippet: MembershipLevelSnippetDto
+  snippet: Option[MembershipLevelSnippetDto]
 )

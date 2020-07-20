@@ -7,6 +7,7 @@ final case class NotFound(error: Error) extends Exception with QueryError
 final case class InvalidArgument(error: Error) extends Exception with QueryError
 final case class Unauthorized(error: Error) extends Exception with QueryError
 final case class Forbidden(error: Error) extends Exception with QueryError
+final case class ApiError(error: Error) extends Exception with QueryError
 
 case class ValidationFailureException(reason: String) extends IllegalArgumentException(reason)
 
@@ -18,8 +19,8 @@ case class Error(
 
 case class ErrorDetails(
   reason: String,
-  locationType: String,
+  locationType: Option[String],
   message: String,
-  domain: String,
-  location: String
+  domain: Option[String],
+  location: Option[String]
 )

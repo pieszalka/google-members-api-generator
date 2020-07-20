@@ -1,6 +1,7 @@
 package com.fourthwall.googlemembersapi.api
 
-import com.fourthwall.googlemembersapi.api.dto.MembershipLevelListDto
+import com.fourthwall.googlemembersapi.api.dto.{MembershipLevelListDto, PartTypes}
+import com.fourthwall.googlemembersapi.api.dto.PartTypes.{PartType, SNIPPET_PART}
 import io.circe.generic.auto._
 import sttp.model.StatusCodes
 import sttp.tapir._
@@ -17,8 +18,9 @@ trait MembershipsLevelsDefinitions extends StatusCodes with TapirJsonCirce {
     * id: 0
     * snippet: 1
     */
-  //private val PartParam = query[PartType]("part").example(SNIPPET_PART)
-  private val PartParam = query[String]("part").example("id")
+  private val PartParam = query[PartType]("part")
+    .example(SNIPPET_PART)
+    .validate(PartTypes.partValidator)
 
   val baseMembershipsLevelsEndpoint = endpoint
     .errorOut(
@@ -27,7 +29,8 @@ trait MembershipsLevelsDefinitions extends StatusCodes with TapirJsonCirce {
         statusMapping(NotFound, jsonBody[NotFound]),
         statusMapping(BadRequest, jsonBody[InvalidArgument]),
         statusMapping(Unauthorized, jsonBody[Unauthorized]),
-        statusMapping(Forbidden, jsonBody[Forbidden])
+        statusMapping(Forbidden, jsonBody[Forbidden]),
+        statusMapping(InternalServerError, jsonBody[ApiError])
       )
     )
     .in(auth.bearer)

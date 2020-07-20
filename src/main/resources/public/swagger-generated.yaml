@@ -7,18 +7,21 @@ paths:
     get:
       operationId: getYoutube/v3/members
       parameters:
-        - name: part
-          in: query
-          required: true
-          schema:
-            type: string
-          example: snippet
-        - name: maxResults
-          in: query
-          required: true
-          schema:
-            type: integer
-          example: 100
+      - name: part
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - id
+          - snippet
+        example: snippet
+      - name: maxResults
+        in: query
+        required: true
+        schema:
+          type: integer
+        example: 100
       responses:
         '200':
           description: ''
@@ -56,16 +59,249 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Forbidden'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      security:
+      - httpAuth: []
+  //youtube/v3/members:
+    get:
+      operationId: get/youtube/v3/members
+      parameters:
+      - name: part
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - id
+          - snippet
+        example: snippet
+      - name: filterByMemberChannelId
+        in: query
+        required: true
+        schema:
+          type: string
+        example: UC_1,UC_2,UC_3
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberListDto'
+        '503':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailable'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgument'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      security:
+      - httpAuth: []
+  ///youtube/v3/members:
+    get:
+      operationId: get//youtube/v3/members
+      parameters:
+      - name: part
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - id
+          - snippet
+        example: snippet
+      - name: mode
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - all_current
+          - updates
+        example: all_current
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberListDto'
+        '503':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailable'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgument'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      security:
+      - httpAuth: []
+  ////youtube/v3/members:
+    get:
+      operationId: get///youtube/v3/members
+      parameters:
+      - name: part
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - id
+          - snippet
+        example: snippet
+      - name: maxResults
+        in: query
+        required: true
+        schema:
+          type: integer
+        example: 100
+      - name: filterByMemberChannelId
+        in: query
+        required: true
+        schema:
+          type: string
+        example: UC_1,UC_2,UC_3
+      - name: mode
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - all_current
+          - updates
+        example: all_current
+      - name: pageToken
+        in: query
+        required: true
+        schema:
+          type: string
+        example: page token
+      - name: hasAccessToLevel
+        in: query
+        required: true
+        schema:
+          type: string
+        example: level ID
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemberListDto'
+        '503':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceUnavailable'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvalidArgument'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Unauthorized'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forbidden'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      security:
+      - httpAuth: []
   /youtube/v3/membershipsLevels:
     get:
       operationId: getYoutube/v3/membershipslevels
       parameters:
-        - name: part
-          in: query
-          required: true
-          schema:
-            type: string
-          example: id
+      - name: part
+        in: query
+        required: true
+        schema:
+          type: string
+          enum:
+          - id
+          - snippet
+        example: snippet
       responses:
         '200':
           description: ''
@@ -103,19 +339,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Forbidden'
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      security:
+      - httpAuth: []
 components:
   schemas:
     ServiceUnavailable:
       required:
-        - error
+      - error
       type: object
       properties:
         error:
           $ref: '#/components/schemas/Error'
     Error:
       required:
-        - message
-        - code
+      - message
+      - code
       type: object
       properties:
         message:
@@ -128,11 +372,8 @@ components:
             $ref: '#/components/schemas/ErrorDetails'
     ErrorDetails:
       required:
-        - reason
-        - locationType
-        - message
-        - domain
-        - location
+      - reason
+      - message
       type: object
       properties:
         reason:
@@ -147,38 +388,44 @@ components:
           type: string
     NotFound:
       required:
-        - error
+      - error
       type: object
       properties:
         error:
           $ref: '#/components/schemas/Error'
     InvalidArgument:
       required:
-        - error
+      - error
       type: object
       properties:
         error:
           $ref: '#/components/schemas/Error'
     Unauthorized:
       required:
-        - error
+      - error
       type: object
       properties:
         error:
           $ref: '#/components/schemas/Error'
     Forbidden:
       required:
-        - error
+      - error
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    ApiError:
+      required:
+      - error
       type: object
       properties:
         error:
           $ref: '#/components/schemas/Error'
     MemberListDto:
       required:
-        - kind
-        - etag
-        - nextPageToken
-        - pageInfo
+      - kind
+      - etag
+      - pageInfo
       type: object
       properties:
         kind:
@@ -195,8 +442,8 @@ components:
             $ref: '#/components/schemas/MemberDto'
     PageInfoDto:
       required:
-        - totalResults
-        - resultsPerPage
+      - totalResults
+      - resultsPerPage
       type: object
       properties:
         totalResults:
@@ -205,9 +452,9 @@ components:
           type: integer
     MemberDto:
       required:
-        - kind
-        - etag
-        - snippet
+      - kind
+      - etag
+      - snippet
       type: object
       properties:
         kind:
@@ -218,9 +465,9 @@ components:
           $ref: '#/components/schemas/MemberSnippetDto'
     MemberSnippetDto:
       required:
-        - creatorChannelId
-        - memberDetails
-        - membershipsDetails
+      - creatorChannelId
+      - memberDetails
+      - membershipsDetails
       type: object
       properties:
         creatorChannelId:
@@ -231,10 +478,10 @@ components:
           $ref: '#/components/schemas/MembershipsDetailsDto'
     MemberDetailsDto:
       required:
-        - channelId
-        - channelUrl
-        - displayName
-        - profileImageUrl
+      - channelId
+      - channelUrl
+      - displayName
+      - profileImageUrl
       type: object
       properties:
         channelId:
@@ -247,9 +494,9 @@ components:
           type: string
     MembershipsDetailsDto:
       required:
-        - highestAccessibleLevel
-        - highestAccessibleLevelDisplayName
-        - membershipsDuration
+      - highestAccessibleLevel
+      - highestAccessibleLevelDisplayName
+      - membershipsDuration
       type: object
       properties:
         highestAccessibleLevel:
@@ -262,14 +509,14 @@ components:
             type: string
         membershipsDuration:
           $ref: '#/components/schemas/MembershipsDurationDto'
-        membershipsDurationAtLevel:
+        membershipsDurationAtLevels:
           type: array
           items:
             $ref: '#/components/schemas/MembershipsDurationAtLevelDto'
     MembershipsDurationDto:
       required:
-        - memberSince
-        - memberTotalDurationMonths
+      - memberSince
+      - memberTotalDurationMonths
       type: object
       properties:
         memberSince:
@@ -279,9 +526,9 @@ components:
           type: integer
     MembershipsDurationAtLevelDto:
       required:
-        - level
-        - memberSince
-        - memberTotalDurationMonths
+      - level
+      - memberSince
+      - memberTotalDurationMonths
       type: object
       properties:
         level:
@@ -293,8 +540,8 @@ components:
           type: integer
     MembershipLevelListDto:
       required:
-        - kind
-        - etag
+      - kind
+      - etag
       type: object
       properties:
         kind:
@@ -307,10 +554,9 @@ components:
             $ref: '#/components/schemas/MembershipLevelDto'
     MembershipLevelDto:
       required:
-        - kind
-        - etag
-        - id
-        - snippet
+      - kind
+      - etag
+      - id
       type: object
       properties:
         kind:
@@ -323,8 +569,8 @@ components:
           $ref: '#/components/schemas/MembershipLevelSnippetDto'
     MembershipLevelSnippetDto:
       required:
-        - creatorChannelId
-        - levelDetails
+      - creatorChannelId
+      - levelDetails
       type: object
       properties:
         creatorChannelId:
@@ -333,8 +579,12 @@ components:
           $ref: '#/components/schemas/MembershipLevelDetailsDto'
     MembershipLevelDetailsDto:
       required:
-        - displayName
+      - displayName
       type: object
       properties:
         displayName:
           type: string
+  securitySchemes:
+    httpAuth:
+      type: http
+      scheme: bearer

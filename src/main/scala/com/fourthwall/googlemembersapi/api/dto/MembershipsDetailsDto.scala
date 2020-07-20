@@ -5,5 +5,5 @@ case class MembershipsDetailsDto(
   highestAccessibleLevelDisplayName: String,
   accessibleLevels: List[String],
   membershipsDuration: MembershipsDurationDto,
-  membershipsDurationAtLevel: List[MembershipsDurationAtLevelDto]
+  membershipsDurationAtLevels: List[MembershipsDurationAtLevelDto]
 )

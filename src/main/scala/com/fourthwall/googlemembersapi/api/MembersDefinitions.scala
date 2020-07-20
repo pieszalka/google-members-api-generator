@@ -1,6 +1,8 @@
 package com.fourthwall.googlemembersapi.api
 
-import com.fourthwall.googlemembersapi.api.dto.MemberListDto
+import com.fourthwall.googlemembersapi.api.dto.{MemberListDto, ModeTypes, PartTypes}
+import com.fourthwall.googlemembersapi.api.dto.ModeTypes.{ALL_CURRENT_MODE_TYPE, ModeType}
+import com.fourthwall.googlemembersapi.api.dto.PartTypes.{PartType, SNIPPET_PART}
 import io.circe.generic.auto._
 import sttp.model.StatusCodes
 import sttp.tapir._
@@ -13,8 +15,9 @@ trait MembersDefinitions extends StatusCodes with TapirJsonCirce {
     * The part parameter specifies the member resource properties that the API response will include.
     * Set the parameter value to snippet. The snippet part has a quota cost of 1 unit.
     */
-  //private val PartParam = query[PartType]("part").example(SNIPPET_PART)
-  private val PartParam = query[String]("part").example("snippet")
+  private val PartParam = query[PartType]("part")
+    .example(SNIPPET_PART)
+    .validate(PartTypes.partValidator)
 
   /**
     * The mode parameter indicates which members will be included in the API response. Set the parameter value to one of the following values:
@@ -27,8 +30,9 @@ trait MembersDefinitions extends StatusCodes with TapirJsonCirce {
     *
     * Note that when this value is used, the API response always contains a nextPageToken.
     */
-  //private val ModeParam = query[ModeType]("mode").example(ALL_CURRENT_MODE_TYPE)
-  private val ModeParam = query[String]("mode").example("all_current")
+  private val ModeParam = query[ModeType]("mode")
+    .example(ALL_CURRENT_MODE_TYPE)
+    .validate(ModeTypes.modeValidator)
 
   /**
     * The maxResults parameter specifies the maximum number of items that should be returned in the result set.
@@ -62,7 +66,8 @@ trait MembersDefinitions extends StatusCodes with TapirJsonCirce {
         statusMapping(NotFound, jsonBody[NotFound]),
         statusMapping(BadRequest, jsonBody[InvalidArgument]),
         statusMapping(Unauthorized, jsonBody[Unauthorized]),
-        statusMapping(Forbidden, jsonBody[Forbidden])
+        statusMapping(Forbidden, jsonBody[Forbidden]),
+        statusMapping(InternalServerError, jsonBody[ApiError])
       )
     )
     .in(auth.bearer)
@@ -88,7 +93,7 @@ trait MembersDefinitions extends StatusCodes with TapirJsonCirce {
     baseMembersEndpoint.get
       .in(PartParam)
       .in(FilterByMemberChanelId)
-      .in("youtube/v3//members")
+      .in("/youtube/v3/members")
       .out(jsonBody[MemberListDto])
 
   /**
@@ -100,7 +105,7 @@ trait MembersDefinitions extends StatusCodes with TapirJsonCirce {
     baseMembersEndpoint.get
       .in(PartParam)
       .in(ModeParam)
-      .in("youtube/v3///members")
+      .in("//youtube/v3/members")
       .out(jsonBody[MemberListDto])
 
   /**
@@ -116,6 +121,6 @@ trait MembersDefinitions extends StatusCodes with TapirJsonCirce {
       .in(ModeParam)
       .in(PageToken)
       .in(HasAccessToLevel)
-      .in("youtube/v3////members")
+      .in("///youtube/v3/members")
       .out(jsonBody[MemberListDto])
 }
